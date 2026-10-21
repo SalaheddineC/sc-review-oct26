@@ -1,0 +1,92 @@
+{
+  "exercise": 2,
+  "description": "Explicit test inputs and reference answers for the European control, Barone-Adesi and Whaley benchmark and finite-difference gamma. These small analytical checks are separate from the saved Monte Carlo studies in results/.",
+  "cases": {
+    "control_transition": {
+      "purpose": "Check the exact European control payoff from prescribed Brownian increments.",
+      "source": "Exact geometric Brownian motion solution at zero rates: S(T) = S(0) exp(-volatility^2 T / 2 + volatility W(T)).",
+      "reference_type": "analytical",
+      "units": {"spot": "price units", "strike": "price units", "maturity_years": "years", "volatility": "per square root year", "brownian_increments": "square root years", "payoff": "price units"},
+      "inputs": {
+        "spot": 40.0,
+        "strike": 40.0,
+        "maturity_years": 0.08333333333333333,
+        "interest_rate": 0.0,
+        "volatility": 0.2,
+        "brownian_increments": [[-0.10, -0.05], [0.10, 0.05]]
+      },
+      "expected": {
+        "terminal_brownian_values": [-0.15, 0.15],
+        "payoff_relation": "max(strike - spot * exp(-0.5 * volatility^2 * maturity_years + volatility * terminal_brownian_value), 0)"
+      },
+      "tolerances": {"relative": 1e-7, "absolute": 0.0}
+    },
+    "control_arithmetic": {
+      "purpose": "Check the fitted control coefficient, adjusted observations and a constant control.",
+      "source": "Control-variate identities: beta = Cov(X,Y) / Var(Y), and adjusted X = X - beta * (Y - E[Y]). Centred training cross-products sum to 3 and centred control squares sum to 2.",
+      "reference_type": "analytical",
+      "units": {"observations": "price units", "coefficient": "dimensionless"},
+      "inputs": {
+        "training_target": [1.0, 2.0, 4.0],
+        "training_control": [0.0, 1.0, 2.0],
+        "evaluation_target": [2.0, 0.0, 5.0, 4.0],
+        "evaluation_control": [1.0, 0.0, 3.0, 2.0],
+        "control_mean": 1.2,
+        "constant_control": [3.0, 3.0, 3.0]
+      },
+      "expected": {
+        "coefficient": 1.5,
+        "adjusted_observations": [2.3, 1.8, 2.3, 2.8],
+        "constant_control_coefficient": 0.0
+      },
+      "tolerances": {"coefficient_absolute": 0.0, "adjusted_relative": 1e-7, "adjusted_absolute": 0.0}
+    },
+    "exact_waiting_control": {
+      "purpose": "Check exact cancellation when the target and control are the same European payoff.",
+      "source": "At zero rates, exact GBM simulation with both payoffs held to expiry gives X = Y. The fitted coefficient is one and every adjusted observation equals the Black-Scholes European put value.",
+      "reference_type": "analytical",
+      "units": {"spot": "price units", "strike": "price units", "maturity_years": "years", "volatility": "per square root year", "brownian_increments": "square root years", "variance": "squared price units"},
+      "inputs": {
+        "spot": 40.0,
+        "strike": 40.0,
+        "maturity_years": 0.08333333333333333,
+        "interest_rate": 0.0,
+        "volatility": 0.2,
+        "brownian_increments": [[-0.2], [-0.05], [0.1], [0.3]]
+      },
+      "expected": {
+        "coefficient": 1.0,
+        "adjusted_observation_relation": "Black-Scholes European put value at the stated zero-rate inputs",
+        "adjusted_variance": 0.0
+      },
+      "tolerances": {"coefficient_absolute": 0.0, "relative": 1e-7, "absolute": 1e-15, "variance_upper_bound": 1e-28}
+    },
+    "baw_published_prices": {
+      "purpose": "Check the general positive-rate Barone-Adesi and Whaley put implementation against five published prices.",
+      "source": "Barone-Adesi and Whaley (1987), Efficient Analytic Approximation of American Option Values, Table IV, first block, quadratic approximation column, page 315. The table uses cost of carry b = r = 8%, hence dividend yield = 0.",
+      "reference_type": "published",
+      "units": {"spot": "price units", "strike": "price units", "maturity_years": "years", "volatility": "per square root year", "interest_rate": "per year", "dividend_yield": "per year", "published_price": "price units", "absolute_tolerance": "price units"},
+      "inputs": {"file": "barone_adesi_whaley_table_iv.csv", "rows": 5},
+      "expected": {"column": "published_price", "published_precision": "two decimal places"},
+      "tolerances": {"column": "absolute_tolerance", "justification": "The published values are rounded to two decimal places; the existing absolute tolerance is 0.0055 price units."}
+    },
+    "gamma_central_difference": {
+      "purpose": "Check the central second-difference formula on two quadratic sequences.",
+      "source": "For V(S) = S^2, [V(S-h) - 2 V(S) + V(S+h)] / h^2 is exactly 2 at any nonzero bump.",
+      "reference_type": "analytical",
+      "units": {"prices": "price units", "spot_bump": "spot units", "gamma": "price units per squared spot unit"},
+      "inputs": {"prices_down": [1.0, 4.0], "prices_centre": [4.0, 9.0], "prices_up": [9.0, 16.0], "spot_bump": 1.0},
+      "expected": {"gamma": [2.0, 2.0]},
+      "tolerances": {"relative": 1e-7, "absolute": 0.0}
+    },
+    "gamma_finite_bump": {
+      "purpose": "Check that reducing the gamma bump reduces truncation error against the analytical zero-rate Black-Scholes gamma.",
+      "source": "Black-Scholes European put price and analytical gamma, normal_density(d1) / (spot * volatility * sqrt(maturity_years)), with zero interest and dividend rates.",
+      "reference_type": "analytical",
+      "units": {"spot": "price units", "strike": "price units", "maturity_years": "years", "volatility": "per square root year", "spot_bumps": "price units", "gamma": "inverse price units"},
+      "inputs": {"spot": 40.0, "strike": 40.0, "maturity_years": 0.08333333333333333, "volatility": 0.2, "spot_bumps": [0.4, 0.2, 0.1]},
+      "expected": {"error_relation": "absolute_error(h=0.1) < absolute_error(h=0.2) < absolute_error(h=0.4)"},
+      "tolerances": {"smallest_bump_absolute_error_upper_bound": 3e-5}
+    }
+  }
+}

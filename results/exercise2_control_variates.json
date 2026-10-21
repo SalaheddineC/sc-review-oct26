@@ -1,0 +1,1641 @@
+{
+  "exercise": 2,
+  "completed_parts": [
+    1,
+    2
+  ],
+  "gamma_part_3_included": false,
+  "created_at_utc": "2026-10-07T20:14:45.607415+00:00",
+  "code_sha256": {
+    "market_data.py": "113a26b23d476cef80fcc86b13145681123481f0f5a92a1976cfcac36e339e25",
+    "products.py": "e95f9356b904296653cb1f44b5b713a0e1d635ad18ed606edb3e6019b6c9c85b",
+    "models.py": "4c2aec1ef9cc32da641352d2939177e0aa7a0b657cadaea97bfef52934814a74",
+    "basis.py": "fd255026a9f8d880c084abbb3febe3d1de2516a71997854a1a01b8e065107d66",
+    "euler_maruyama.py": "cf595c47425cb3a6bac2a122a6832378a5b8035c4723b58674f9f99da3d102f3",
+    "longstaff_schwartz_lsmc.py": "f7c3cd62e09a846ceddf82835021498cfaea197fdc0ca5f47c732a19ec34be7c",
+    "valuation.py": "2babe04538710fe195f4367de2cc40ee8830d5d3820e5a7ccd45dcd3b35700a4",
+    "black_scholes_put.py": "4a360433be0c47dc4206b954619481c89e326eb6f7e715d3bd6f81d298bb55dd",
+    "barone_adesi_whaley.py": "719b1ef95ce06bdc4a7462ef1a94d4219ea3667c3d43051aea642f20fa88054a",
+    "control_variates.py": "2b481c9a1b0b12bd62a3be0258d205fb4c55b8cb5eea7aeada2d5f70fd220985",
+    "gamma.py": "4c635bd2f7ca9b7eaf499d90b4078a72d8cf7ff8587c6fe302b4bc52ff0eb31a",
+    "run_exercise2.py": "64435bc38f8d791e3ef91c89feb4ef77e2da851886046813d845b58f6904876a",
+    "longstaff_table1.csv": "b0e6793be5ca2fa6ef3e571a2dc5798df20e4316a6cbe69b2dc3c2c71af18996",
+    "requirements.txt": "8b9d348e86848bb8fbcb5fcc35e6026a9b3aa66e6ca924b887a22ddb0716fc81"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "root_seed": 20261004,
+  "workers": 2,
+  "published_input_source": {
+    "file": "longstaff_table1.csv",
+    "paper": "Longstaff-Schwartz (2001), Table 1",
+    "selected_original_row": {
+      "spot": 40.0,
+      "volatility": 0.2,
+      "maturity": 1.0,
+      "strike": 40.0,
+      "rate": 0.06,
+      "dividend": 0.0,
+      "american_fd": 2.314,
+      "european": 2.066,
+      "american_lsm": 2.313,
+      "lsm_se": 0.009,
+      "fd_early_exercise": 0.248,
+      "paper_lsm_early_exercise": 0.247,
+      "difference": 0.001,
+      "paper_paths": 100000.0,
+      "exercise_steps_per_year": 50.0
+    },
+    "reused_fields": [
+      "spot",
+      "strike"
+    ],
+    "published_prices_used_as_exercise2_benchmarks": false
+  },
+  "assumptions": {
+    "rates_and_yields": "All zero, as required by Exercise 2; GBM drift is zero.",
+    "volatilities": "5%, 10%, 20%, 30% are specified in Part 2 and reused in Part 1.",
+    "maturity": "One month means 1/12 year; Part 1 shares Part 2's one-month cases.",
+    "dates": "Days/365, daily simulation and exercise, shorter final interval.",
+    "basis": "[1, S/K, (S/K)^2], retained from Exercise 1.",
+    "counts": "50,000 training and 100,000 evaluation default to Exercise 1's full runs; CLI overrides are recorded per case.",
+    "control": "Exact-GBM European payoff, paired using the American Euler path's Brownian increments. Euler European expectation is not generally Black-Scholes.",
+    "coefficient": "Estimate beta separately for each volatility from existing training payoff pairs; no extra pilot batch. Apply it unchanged to independent evaluation paths.",
+    "coefficient_limitation": "Training payments use fitted exercise rules, so training beta need not minimise independent evaluation variance. Evaluate its effectiveness on evaluation paths.",
+    "uncertainty": "Estimator variance is sample observation variance divided by evaluation path count, conditional on fitted exercise rules and beta. It excludes training variability, Euler bias and policy error.",
+    "baw": "A general BAW implementation is available. These required runs use its exact zero-rate, zero-yield branch; they do not validate general BAW accuracy."
+  },
+  "units": {
+    "prices_and_payoffs": "Contract currency units; no market currency assigned",
+    "payoff_variance_and_estimator_variance": "Squared contract currency units",
+    "volatility": "Annualised decimal",
+    "time": "Years, days/365"
+  },
+  "pricing_results": [
+    {
+      "study": "part_1_european_control_variate",
+      "market_data": {
+        "spot": 40.0,
+        "interest_rate": 0.0,
+        "volatility": 0.05,
+        "foreign_interest_rate": 0.0
+      },
+      "product": {
+        "strike": 40.0,
+        "maturity_years": 0.08333333333333333
+      },
+      "model": {
+        "spot_drift_rate": 0.0,
+        "volatility": 0.05
+      },
+      "model_name": "GeometricBrownianMotionModel",
+      "american_scheme": "Euler-Maruyama",
+      "european_control_scheme": "Exact GBM",
+      "training_paths": 50000,
+      "evaluation_paths": 100000,
+      "requested_time_step_days": 1.0,
+      "exercise_dates_per_year": 365,
+      "seed_entropy": 20261004,
+      "case_seed_spawn_key": [
+        0
+      ],
+      "runtime_seconds": 0.6034040399972582,
+      "valuation": {
+        "plain_price": 0.2292874371559656,
+        "controlled_price": 0.22925874036234997,
+        "european_black_scholes_value": 0.2303274336090695,
+        "simulated_european_price": 0.23036425867844554,
+        "control_coefficient": 0.7792733076102709,
+        "payoff_correlation": 0.882477699749991,
+        "plain_payoff_variance": 0.086473799022624,
+        "controlled_observation_variance": 0.019133178818084025,
+        "plain_estimator_variance": 8.647379902262401e-07,
+        "controlled_estimator_variance": 1.9133178818084024e-07,
+        "plain_standard_error": 0.0009299128938918097,
+        "controlled_standard_error": 0.0004374148925000614,
+        "variance_reduction_factor": 4.519573033044145,
+        "training_control_variance": 0.11300339520448754,
+        "training_payoff_covariance": 0.08806052955219162,
+        "training_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "evaluation_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "regression_diagnostics": [
+          {
+            "date_index": 30,
+            "itm_paths": 25051,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 29,
+            "itm_paths": 25075,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 28,
+            "itm_paths": 25139,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 27,
+            "itm_paths": 25072,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 26,
+            "itm_paths": 25081,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 25,
+            "itm_paths": 25079,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 24,
+            "itm_paths": 25096,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 23,
+            "itm_paths": 25093,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 22,
+            "itm_paths": 25189,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 21,
+            "itm_paths": 25143,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 20,
+            "itm_paths": 25148,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 19,
+            "itm_paths": 25118,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 18,
+            "itm_paths": 25207,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 17,
+            "itm_paths": 25073,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 16,
+            "itm_paths": 25062,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 15,
+            "itm_paths": 25071,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 14,
+            "itm_paths": 25230,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 13,
+            "itm_paths": 25172,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 12,
+            "itm_paths": 25155,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 11,
+            "itm_paths": 25073,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 10,
+            "itm_paths": 25136,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 9,
+            "itm_paths": 25208,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 8,
+            "itm_paths": 25188,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 7,
+            "itm_paths": 25199,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 6,
+            "itm_paths": 25216,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 5,
+            "itm_paths": 25094,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 4,
+            "itm_paths": 25239,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 3,
+            "itm_paths": 25276,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 2,
+            "itm_paths": 25220,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 1,
+            "itm_paths": 25235,
+            "basis_columns": 3,
+            "rank": 3
+          }
+        ],
+        "exercise_times": [
+          0.0,
+          0.002739726027,
+          0.005479452055,
+          0.008219178082,
+          0.01095890411,
+          0.013698630137,
+          0.016438356164,
+          0.019178082192,
+          0.021917808219,
+          0.024657534247,
+          0.027397260274,
+          0.030136986301,
+          0.032876712329,
+          0.035616438356,
+          0.038356164384,
+          0.041095890411,
+          0.043835616438,
+          0.046575342466,
+          0.049315068493,
+          0.052054794521,
+          0.054794520548,
+          0.057534246575,
+          0.060273972603,
+          0.06301369863,
+          0.065753424658,
+          0.068493150685,
+          0.071232876712,
+          0.07397260274,
+          0.076712328767,
+          0.079452054795,
+          0.082191780822,
+          0.08333333333333333
+        ],
+        "training_seed_spawn_key": [
+          0,
+          0
+        ],
+        "evaluation_seed_spawn_key": [
+          0,
+          1
+        ],
+        "exercise_at_time_zero": false
+      },
+      "example_evaluation_payoffs": [
+        {
+          "path_number": 1,
+          "american_payoff": 0.8195334814717583,
+          "european_payoff": 0.47594873950630046,
+          "controlled_observation": 0.628127354005669
+        },
+        {
+          "path_number": 2,
+          "american_payoff": 0.6127518081405086,
+          "european_payoff": 0.518854629124732,
+          "controlled_observation": 0.3879102661555029
+        },
+        {
+          "path_number": 3,
+          "american_payoff": 0.9598367085198021,
+          "european_payoff": 1.040414898275202,
+          "controlled_observation": 0.32855717047580657
+        },
+        {
+          "path_number": 4,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 0.17948802102192465
+        },
+        {
+          "path_number": 5,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 0.17948802102192465
+        }
+      ]
+    },
+    {
+      "study": "part_1_european_control_variate",
+      "market_data": {
+        "spot": 40.0,
+        "interest_rate": 0.0,
+        "volatility": 0.1,
+        "foreign_interest_rate": 0.0
+      },
+      "product": {
+        "strike": 40.0,
+        "maturity_years": 0.08333333333333333
+      },
+      "model": {
+        "spot_drift_rate": 0.0,
+        "volatility": 0.1
+      },
+      "model_name": "GeometricBrownianMotionModel",
+      "american_scheme": "Euler-Maruyama",
+      "european_control_scheme": "Exact GBM",
+      "training_paths": 50000,
+      "evaluation_paths": 100000,
+      "requested_time_step_days": 1.0,
+      "exercise_dates_per_year": 365,
+      "seed_entropy": 20261004,
+      "case_seed_spawn_key": [
+        1
+      ],
+      "runtime_seconds": 0.6768789810012095,
+      "valuation": {
+        "plain_price": 0.45637339356740725,
+        "controlled_price": 0.45777346146043635,
+        "european_black_scholes_value": 0.46064287136210424,
+        "simulated_european_price": 0.45884886414385684,
+        "control_coefficient": 0.7804137457132585,
+        "payoff_correlation": 0.8841385608577454,
+        "plain_payoff_variance": 0.3391187894741065,
+        "controlled_observation_variance": 0.0740340987644299,
+        "plain_estimator_variance": 3.391187894741065e-06,
+        "controlled_estimator_variance": 7.403409876442991e-07,
+        "plain_standard_error": 0.0018415178236283962,
+        "controlled_standard_error": 0.0008604306989201972,
+        "variance_reduction_factor": 4.580575641950517,
+        "training_control_variance": 0.43503453194838104,
+        "training_payoff_covariance": 0.33950692859245135,
+        "training_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "evaluation_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "regression_diagnostics": [
+          {
+            "date_index": 30,
+            "itm_paths": 25222,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 29,
+            "itm_paths": 25205,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 28,
+            "itm_paths": 25200,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 27,
+            "itm_paths": 25276,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 26,
+            "itm_paths": 25196,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 25,
+            "itm_paths": 25178,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 24,
+            "itm_paths": 25168,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 23,
+            "itm_paths": 25192,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 22,
+            "itm_paths": 25163,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 21,
+            "itm_paths": 25171,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 20,
+            "itm_paths": 25231,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 19,
+            "itm_paths": 25204,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 18,
+            "itm_paths": 25279,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 17,
+            "itm_paths": 25243,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 16,
+            "itm_paths": 25213,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 15,
+            "itm_paths": 25233,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 14,
+            "itm_paths": 25175,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 13,
+            "itm_paths": 25205,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 12,
+            "itm_paths": 25186,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 11,
+            "itm_paths": 25232,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 10,
+            "itm_paths": 25168,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 9,
+            "itm_paths": 25028,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 8,
+            "itm_paths": 25002,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 7,
+            "itm_paths": 25122,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 6,
+            "itm_paths": 25142,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 5,
+            "itm_paths": 25129,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 4,
+            "itm_paths": 25172,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 3,
+            "itm_paths": 25088,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 2,
+            "itm_paths": 25093,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 1,
+            "itm_paths": 25110,
+            "basis_columns": 3,
+            "rank": 3
+          }
+        ],
+        "exercise_times": [
+          0.0,
+          0.002739726027,
+          0.005479452055,
+          0.008219178082,
+          0.01095890411,
+          0.013698630137,
+          0.016438356164,
+          0.019178082192,
+          0.021917808219,
+          0.024657534247,
+          0.027397260274,
+          0.030136986301,
+          0.032876712329,
+          0.035616438356,
+          0.038356164384,
+          0.041095890411,
+          0.043835616438,
+          0.046575342466,
+          0.049315068493,
+          0.052054794521,
+          0.054794520548,
+          0.057534246575,
+          0.060273972603,
+          0.06301369863,
+          0.065753424658,
+          0.068493150685,
+          0.071232876712,
+          0.07397260274,
+          0.076712328767,
+          0.079452054795,
+          0.082191780822,
+          0.08333333333333333
+        ],
+        "training_seed_spawn_key": [
+          1,
+          0
+        ],
+        "evaluation_seed_spawn_key": [
+          1,
+          1
+        ],
+        "exercise_at_time_zero": false
+      },
+      "example_evaluation_payoffs": [
+        {
+          "path_number": 1,
+          "american_payoff": 1.453795144346877,
+          "european_payoff": 2.327769058185389,
+          "controlled_observation": -0.003335796831195781
+        },
+        {
+          "path_number": 2,
+          "american_payoff": 0.16650616730745327,
+          "european_payoff": 0.16233686757130528,
+          "controlled_observation": 0.39930827309458417
+        },
+        {
+          "path_number": 3,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 0.3594920286758105
+        },
+        {
+          "path_number": 4,
+          "american_payoff": 1.6104313491232034,
+          "european_payoff": 1.62881113350673,
+          "controlled_observation": 0.6987767800395684
+        },
+        {
+          "path_number": 5,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 0.3594920286758105
+        }
+      ]
+    },
+    {
+      "study": "part_1_european_control_variate",
+      "market_data": {
+        "spot": 40.0,
+        "interest_rate": 0.0,
+        "volatility": 0.2,
+        "foreign_interest_rate": 0.0
+      },
+      "product": {
+        "strike": 40.0,
+        "maturity_years": 0.08333333333333333
+      },
+      "model": {
+        "spot_drift_rate": 0.0,
+        "volatility": 0.2
+      },
+      "model_name": "GeometricBrownianMotionModel",
+      "american_scheme": "Euler-Maruyama",
+      "european_control_scheme": "Exact GBM",
+      "training_paths": 50000,
+      "evaluation_paths": 100000,
+      "requested_time_step_days": 1.0,
+      "exercise_dates_per_year": 365,
+      "seed_entropy": 20261004,
+      "case_seed_spawn_key": [
+        2
+      ],
+      "runtime_seconds": 0.651673699998355,
+      "valuation": {
+        "plain_price": 0.9157888826701504,
+        "controlled_price": 0.9178894272935809,
+        "european_black_scholes_value": 0.9211897871209729,
+        "simulated_european_price": 0.9184028775796081,
+        "control_coefficient": 0.7537182647134197,
+        "payoff_correlation": 0.8681419123564229,
+        "plain_payoff_variance": 1.2715088094470843,
+        "controlled_observation_variance": 0.3132208137433421,
+        "plain_estimator_variance": 1.2715088094470843e-05,
+        "controlled_estimator_variance": 3.132208137433421e-06,
+        "plain_standard_error": 0.0035658222185732764,
+        "controlled_standard_error": 0.0017698045478056104,
+        "variance_reduction_factor": 4.059464613002947,
+        "training_control_variance": 1.6858451812974096,
+        "training_payoff_covariance": 1.2706523046229605,
+        "training_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "evaluation_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "regression_diagnostics": [
+          {
+            "date_index": 30,
+            "itm_paths": 25603,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 29,
+            "itm_paths": 25624,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 28,
+            "itm_paths": 25608,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 27,
+            "itm_paths": 25514,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 26,
+            "itm_paths": 25401,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 25,
+            "itm_paths": 25453,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 24,
+            "itm_paths": 25393,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 23,
+            "itm_paths": 25432,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 22,
+            "itm_paths": 25427,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 21,
+            "itm_paths": 25492,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 20,
+            "itm_paths": 25353,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 19,
+            "itm_paths": 25354,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 18,
+            "itm_paths": 25393,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 17,
+            "itm_paths": 25366,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 16,
+            "itm_paths": 25271,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 15,
+            "itm_paths": 25348,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 14,
+            "itm_paths": 25299,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 13,
+            "itm_paths": 25316,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 12,
+            "itm_paths": 25280,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 11,
+            "itm_paths": 25259,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 10,
+            "itm_paths": 25164,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 9,
+            "itm_paths": 25311,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 8,
+            "itm_paths": 25180,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 7,
+            "itm_paths": 25294,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 6,
+            "itm_paths": 25163,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 5,
+            "itm_paths": 25175,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 4,
+            "itm_paths": 25240,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 3,
+            "itm_paths": 25202,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 2,
+            "itm_paths": 25165,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 1,
+            "itm_paths": 25096,
+            "basis_columns": 3,
+            "rank": 3
+          }
+        ],
+        "exercise_times": [
+          0.0,
+          0.002739726027,
+          0.005479452055,
+          0.008219178082,
+          0.01095890411,
+          0.013698630137,
+          0.016438356164,
+          0.019178082192,
+          0.021917808219,
+          0.024657534247,
+          0.027397260274,
+          0.030136986301,
+          0.032876712329,
+          0.035616438356,
+          0.038356164384,
+          0.041095890411,
+          0.043835616438,
+          0.046575342466,
+          0.049315068493,
+          0.052054794521,
+          0.054794520548,
+          0.057534246575,
+          0.060273972603,
+          0.06301369863,
+          0.065753424658,
+          0.068493150685,
+          0.071232876712,
+          0.07397260274,
+          0.076712328767,
+          0.079452054795,
+          0.082191780822,
+          0.08333333333333333
+        ],
+        "training_seed_spawn_key": [
+          2,
+          0
+        ],
+        "evaluation_seed_spawn_key": [
+          2,
+          1
+        ],
+        "exercise_at_time_zero": false
+      },
+      "example_evaluation_payoffs": [
+        {
+          "path_number": 1,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 0.6943175678205442
+        },
+        {
+          "path_number": 2,
+          "american_payoff": 1.7329187950118055,
+          "european_payoff": 1.6956310923168587,
+          "controlled_observation": 1.1492082383371665
+        },
+        {
+          "path_number": 3,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 0.6943175678205442
+        },
+        {
+          "path_number": 4,
+          "american_payoff": 2.349036610864765,
+          "european_payoff": 2.435379209198146,
+          "controlled_observation": 1.207764387209342
+        },
+        {
+          "path_number": 5,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 0.6943175678205442
+        }
+      ]
+    },
+    {
+      "study": "part_1_european_control_variate",
+      "market_data": {
+        "spot": 40.0,
+        "interest_rate": 0.0,
+        "volatility": 0.3,
+        "foreign_interest_rate": 0.0
+      },
+      "product": {
+        "strike": 40.0,
+        "maturity_years": 0.08333333333333333
+      },
+      "model": {
+        "spot_drift_rate": 0.0,
+        "volatility": 0.3
+      },
+      "model_name": "GeometricBrownianMotionModel",
+      "american_scheme": "Euler-Maruyama",
+      "european_control_scheme": "Exact GBM",
+      "training_paths": 50000,
+      "evaluation_paths": 100000,
+      "requested_time_step_days": 1.0,
+      "exercise_dates_per_year": 365,
+      "seed_entropy": 20261004,
+      "case_seed_spawn_key": [
+        3
+      ],
+      "runtime_seconds": 0.6972453439957462,
+      "valuation": {
+        "plain_price": 1.3705295906513884,
+        "controlled_price": 1.3753176164334457,
+        "european_black_scholes_value": 1.3815448516341817,
+        "simulated_european_price": 1.3751739795368216,
+        "control_coefficient": 0.7515495067059573,
+        "payoff_correlation": 0.8671468949028083,
+        "plain_payoff_variance": 2.7505179523425816,
+        "controlled_observation_variance": 0.6822967237211393,
+        "plain_estimator_variance": 2.7505179523425817e-05,
+        "controlled_estimator_variance": 6.8229672372113925e-06,
+        "plain_standard_error": 0.005244538065780991,
+        "controlled_standard_error": 0.0026120810165864675,
+        "variance_reduction_factor": 4.0312636082168005,
+        "training_control_variance": 3.671543909880068,
+        "training_payoff_covariance": 2.759347014319632,
+        "training_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "evaluation_simulation_diagnostics": {
+          "simulation_times": [
+            0.0,
+            0.002739726027,
+            0.005479452055,
+            0.008219178082,
+            0.01095890411,
+            0.013698630137,
+            0.016438356164,
+            0.019178082192,
+            0.021917808219,
+            0.024657534247,
+            0.027397260274,
+            0.030136986301,
+            0.032876712329,
+            0.035616438356,
+            0.038356164384,
+            0.041095890411,
+            0.043835616438,
+            0.046575342466,
+            0.049315068493,
+            0.052054794521,
+            0.054794520548,
+            0.057534246575,
+            0.060273972603,
+            0.06301369863,
+            0.065753424658,
+            0.068493150685,
+            0.071232876712,
+            0.07397260274,
+            0.076712328767,
+            0.079452054795,
+            0.082191780822,
+            0.08333333333333333
+          ],
+          "variance_projection_count": 0,
+          "negative_spot_state_count": 0
+        },
+        "regression_diagnostics": [
+          {
+            "date_index": 30,
+            "itm_paths": 25768,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 29,
+            "itm_paths": 25803,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 28,
+            "itm_paths": 25852,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 27,
+            "itm_paths": 25856,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 26,
+            "itm_paths": 25790,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 25,
+            "itm_paths": 25726,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 24,
+            "itm_paths": 25729,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 23,
+            "itm_paths": 25738,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 22,
+            "itm_paths": 25649,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 21,
+            "itm_paths": 25699,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 20,
+            "itm_paths": 25744,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 19,
+            "itm_paths": 25655,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 18,
+            "itm_paths": 25602,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 17,
+            "itm_paths": 25552,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 16,
+            "itm_paths": 25514,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 15,
+            "itm_paths": 25560,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 14,
+            "itm_paths": 25442,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 13,
+            "itm_paths": 25449,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 12,
+            "itm_paths": 25376,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 11,
+            "itm_paths": 25361,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 10,
+            "itm_paths": 25371,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 9,
+            "itm_paths": 25227,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 8,
+            "itm_paths": 25172,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 7,
+            "itm_paths": 25297,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 6,
+            "itm_paths": 25232,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 5,
+            "itm_paths": 25177,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 4,
+            "itm_paths": 25015,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 3,
+            "itm_paths": 24998,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 2,
+            "itm_paths": 25003,
+            "basis_columns": 3,
+            "rank": 3
+          },
+          {
+            "date_index": 1,
+            "itm_paths": 24872,
+            "basis_columns": 3,
+            "rank": 3
+          }
+        ],
+        "exercise_times": [
+          0.0,
+          0.002739726027,
+          0.005479452055,
+          0.008219178082,
+          0.01095890411,
+          0.013698630137,
+          0.016438356164,
+          0.019178082192,
+          0.021917808219,
+          0.024657534247,
+          0.027397260274,
+          0.030136986301,
+          0.032876712329,
+          0.035616438356,
+          0.038356164384,
+          0.041095890411,
+          0.043835616438,
+          0.046575342466,
+          0.049315068493,
+          0.052054794521,
+          0.054794520548,
+          0.057534246575,
+          0.060273972603,
+          0.06301369863,
+          0.065753424658,
+          0.068493150685,
+          0.071232876712,
+          0.07397260274,
+          0.076712328767,
+          0.079452054795,
+          0.082191780822,
+          0.08333333333333333
+        ],
+        "training_seed_spawn_key": [
+          3,
+          0
+        ],
+        "evaluation_seed_spawn_key": [
+          3,
+          1
+        ],
+        "exercise_at_time_zero": false
+      },
+      "example_evaluation_payoffs": [
+        {
+          "path_number": 1,
+          "american_payoff": 0.10810518394476532,
+          "european_payoff": 0.1421590712899885,
+          "controlled_observation": 1.0395649557808218
+        },
+        {
+          "path_number": 2,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 1.0382993517378243
+        },
+        {
+          "path_number": 3,
+          "american_payoff": 0.48473770218654977,
+          "european_payoff": 0.5042595682741009,
+          "controlled_observation": 1.1440610241362146
+        },
+        {
+          "path_number": 4,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 1.0382993517378243
+        },
+        {
+          "path_number": 5,
+          "american_payoff": 0.0,
+          "european_payoff": 0.0,
+          "controlled_observation": 1.0382993517378243
+        }
+      ]
+    }
+  ],
+  "baw_comparisons": [
+    {
+      "volatility": 0.05,
+      "baw_reference": 0.2303274336090695,
+      "baw_branch": "Exact zero-rate, zero-yield specialisation",
+      "plain_price": 0.2292874371559656,
+      "controlled_price": 0.22925874036234997,
+      "plain_error": -0.0010399964531038752,
+      "controlled_error": -0.0010686932467195154,
+      "plain_standard_error": 0.0009299128938918097,
+      "controlled_standard_error": 0.0004374148925000614
+    },
+    {
+      "volatility": 0.1,
+      "baw_reference": 0.46064287136210424,
+      "baw_branch": "Exact zero-rate, zero-yield specialisation",
+      "plain_price": 0.45637339356740725,
+      "controlled_price": 0.45777346146043635,
+      "plain_error": -0.004269477794696996,
+      "controlled_error": -0.0028694099016678964,
+      "plain_standard_error": 0.0018415178236283962,
+      "controlled_standard_error": 0.0008604306989201972
+    },
+    {
+      "volatility": 0.2,
+      "baw_reference": 0.9211897871209729,
+      "baw_branch": "Exact zero-rate, zero-yield specialisation",
+      "plain_price": 0.9157888826701504,
+      "controlled_price": 0.9178894272935809,
+      "plain_error": -0.00540090445082253,
+      "controlled_error": -0.003300359827391963,
+      "plain_standard_error": 0.0035658222185732764,
+      "controlled_standard_error": 0.0017698045478056104
+    },
+    {
+      "volatility": 0.3,
+      "baw_reference": 1.3815448516341817,
+      "baw_branch": "Exact zero-rate, zero-yield specialisation",
+      "plain_price": 1.3705295906513884,
+      "controlled_price": 1.3753176164334457,
+      "plain_error": -0.011015260982793373,
+      "controlled_error": -0.006227235200735981,
+      "plain_standard_error": 0.005244538065780991,
+      "controlled_standard_error": 0.0026120810165864675
+    }
+  ]
+}

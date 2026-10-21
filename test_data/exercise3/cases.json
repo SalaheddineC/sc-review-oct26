@@ -1,0 +1,86 @@
+{
+  "exercise": 3,
+  "description": "Test data for Euler, Milstein and Wiktorsson cross-integral checks. Analytical references are evaluated in tests/test_exercise3_milstein.py using the inputs below; no expected value is taken from the simulator being tested.",
+  "cases": {
+    "gbm_coupled_convergence": {
+      "purpose": "Compare Euler and Milstein on the same Brownian paths against the exact GBM terminal value.",
+      "source": "Exact solution of dS = mu*S*dt + sigma*S*dW by Ito's formula. Broad convergence bands check the expected strong orders of one half for Euler and one for Milstein; they are numerical acceptance bounds, not published price data.",
+      "reference_type": "analytical solution with seeded sampling",
+      "units": {"time": "years", "spot": "normalised price", "volatility": "per square root year", "brownian_increment": "square root years"},
+      "inputs": {
+        "market": {"spot": 1.0, "interest_rate": 0.0},
+        "model": {"spot_drift_rate": 0.0, "volatility": 0.3},
+        "maturity": 1.0,
+        "path_count": 12000,
+        "finest_steps": 128,
+        "step_counts": [16, 32, 64, 128],
+        "increment_seed": 310,
+        "simulation_seed": 31
+      },
+      "expected": {"terminal_value": "S(T) = S(0)*exp((mu - sigma^2/2)*T + sigma*sum(dW)); each coarse increment is the sum of its fine increments"},
+      "tolerances": {"milstein_to_euler_error_upper_ratio": 0.2, "milstein_coarse_to_fine_error_ratio": [6.0, 10.0], "euler_coarse_to_fine_error_ratio": [2.2, 3.6]}
+    },
+    "constant_variance_limit": {
+      "purpose": "With zero volatility of variance and v(0) = theta, the two-driver model must recover scalar GBM for the same supplied first-driver increments.",
+      "source": "Analytical limiting case of the assignment's stochastic-volatility SDE: v(t) = theta and sigma = sqrt(theta). Euler must not depend on unused area-sampling randomness.",
+      "reference_type": "analytical limiting model",
+      "units": {"time": "years", "spot": "normalised price", "variance": "per year", "brownian_increment": "square root years"},
+      "inputs": {
+        "market": {"spot": 1.0, "interest_rate": 0.0},
+        "stochastic_volatility_model": {"initial_variance": 0.04, "mean_reversion_speed": 2.0, "long_term_variance": 0.04, "volatility_of_variance": 0.0, "brownian_correlation": 0.5},
+        "gbm_model": {"spot_drift_rate": 0.0, "volatility": 0.2},
+        "maturity": 0.5,
+        "step_count": 20,
+        "path_count": 500,
+        "increment_seed": 312,
+        "simulation_seed": 312,
+        "alternative_simulation_seeds": [999, 888]
+      },
+      "expected": {"spot_relation": "Stochastic-volatility and scalar-GBM spot paths agree for each scheme", "constant_variance": 0.04, "variance_projection_count": 0, "seed_relation": "Supplied-increment Euler paths are exactly unchanged when only the simulation seed changes"},
+      "tolerances": {"spot_relative": 1e-14, "spot_absolute": 0.0, "variance_and_repeated_path_comparison": "exact equality"}
+    },
+    "wiktorsson_conditional_law": {
+      "purpose": "Check the cross-integral sum identity and the complete conditional area law, including its non-Gaussian shape.",
+      "source": "Wiktorsson (2001), Section 1, equation (1.5), removing the endpoint phase. For A=(J12-J21)/2, E[exp(i*lambda*A)|w] = x/sinh(x)*exp(-|w|^2/(2*h)*(x*coth(x)-1)), x=lambda*h/2.",
+      "reference_type": "published analytical characteristic function",
+      "units": {"time_step": "years; 1/365 year (one day)", "endpoint_pairs": "Brownian increment divided by sqrt(time_step)", "frequencies": "frequency of normalised area A/time_step", "cross_integrals": "years"},
+      "inputs": {"path_count": 100000, "time_step": 0.0027397260273972603, "endpoint_pairs": [[0.0, 0.0], [1.2, -0.7]], "accuracies": [1, 2], "seed_base": 313, "frequencies": [2.0, 5.0, 8.0]},
+      "expected": {"sum_identity": "J12 + J21 = dW1*dW2", "cosine_mean": "For frequency f and normalised endpoint u: (f/2)/sinh(f/2)*exp(-sum(u^2)/2*((f/2)/tanh(f/2)-1))", "sine_mean": 0.0, "terms_per_accuracy": 6},
+      "tolerances": {"sum_relative": 0.0, "sum_absolute": 2e-18, "sampling_standard_errors": 6.0, "cosine_finite_series_allowance": 0.001}
+    },
+    "common_driver_boundary": {
+      "purpose": "Check old-state coefficient evaluation with a common driver, variance projection and diagnostic counters at the zero-variance boundary.",
+      "source": "General one-driver vector Milstein update X + a(X)*h + b(X)*dW + (Db(X)*b(X))*(dW^2-h)/2. The Jacobian is evaluated independently by centred numerical differentiation. Projection expectations follow the documented nonnegative-variance convention.",
+      "reference_type": "independently differentiated vector formula and prescribed boundary case",
+      "units": {"time": "years", "spot": "price units", "variance": "per year", "brownian_increment": "square root years"},
+      "inputs": {
+        "market": {"spot": 10.0, "interest_rate": 0.0},
+        "model": {"initial_variance": 0.04, "mean_reversion_speed": 1.0, "long_term_variance": 0.05, "volatility_of_variance": 0.1, "brownian_correlation": 1.0},
+        "times": [0.0, 0.25, 0.5],
+        "increments": [[[-0.4, 99.0], [0.0, -99.0]]],
+        "simulation_seed": 314,
+        "differentiation_step": 1e-6
+      },
+      "expected": {"first_spot": "First component of the independently differentiated vector Milstein update", "first_raw_variance": "negative before projection", "variance_path": [[0.04, 0.0, 0.0]], "second_spot": "strictly below first-step spot", "diagnostics": {"variance_projection_count": 2, "zero_variance_start_count": 1, "path_step_count": 2, "area_normal_draw_count": 0}},
+      "tolerances": {"spot_relative": 1e-10, "spot_absolute": 0.0, "variance_and_counter_comparison": "exact equality"}
+    },
+    "negative_spot": {
+      "purpose": "Retain and count a finite negative Milstein spot instead of silently replacing it.",
+      "source": "Prescribed scalar GBM Milstein step: S1=S0*(1+mu*h+sigma*dW+sigma^2*(dW^2-h)/2). With S0=1, mu=0, sigma=2, h=1 and dW=0, S1=-1 exactly.",
+      "reference_type": "analytical one-step calculation",
+      "units": {"time": "years", "spot": "normalised price", "volatility": "per square root year", "brownian_increment": "square root years"},
+      "inputs": {"market": {"spot": 1.0, "interest_rate": 0.0}, "model": {"spot_drift_rate": 0.0, "volatility": 2.0}, "times": [0.0, 1.0], "increments": [[0.0]], "simulation_seed": 315},
+      "expected": {"terminal_spot": -1.0, "diagnostics": {"negative_spot_state_count": 1, "path_step_count": 1}},
+      "tolerances": {"comparison": "exact equality"}
+    },
+    "nonfinite_spot": {
+      "purpose": "Reject a non-finite simulated spot explicitly.",
+      "source": "Deliberate floating-point overflow using finite but extreme model inputs; this checks error handling, not an economically meaningful scenario.",
+      "reference_type": "prescribed failure case",
+      "units": {"time": "years", "spot": "price units", "volatility": "per square root year", "brownian_increment": "square root years"},
+      "inputs": {"market": {"spot": 1e300, "interest_rate": 0.0}, "model": {"spot_drift_rate": 0.0, "volatility": 1e100}, "times": [0.0, 1.0], "increments": [[1.0]], "simulation_seed": 315},
+      "expected": {"exception": "FloatingPointError", "message_pattern": "non-finite spot"},
+      "tolerances": {"comparison": "required exception type and message"}
+    }
+  }
+}

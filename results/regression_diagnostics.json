@@ -1,0 +1,860 @@
+{
+  "paired_sensitivities": {
+    "training_paths": 50000,
+    "evaluation_paths": 100000,
+    "seed": 20261004,
+    "baseline_model": {
+      "initial_variance": 0.0064,
+      "mean_reversion_speed": 2.0,
+      "long_term_variance": 0.0064,
+      "volatility_of_variance": 0.04,
+      "brownian_correlation": 0.5,
+      "spot_drift_rate": 0.0
+    },
+    "comparisons": [
+      {
+        "parameter": "long_term_variance",
+        "parameter_value": 0.0016,
+        "option_value": 0.023822061224019975,
+        "standard_error": 8.876401782227838e-05,
+        "difference_from_baseline": -0.007827294350367274,
+        "paired_standard_error": 4.9921179041442817e-05
+      },
+      {
+        "parameter": "long_term_variance",
+        "parameter_value": 0.0064,
+        "option_value": 0.03164935557438724,
+        "standard_error": 0.0001186865505384848,
+        "difference_from_baseline": 0.0,
+        "paired_standard_error": 0.0
+      },
+      {
+        "parameter": "long_term_variance",
+        "parameter_value": 0.0256,
+        "option_value": 0.052162806503273366,
+        "standard_error": 0.00019537037636456375,
+        "difference_from_baseline": 0.02051345092888612,
+        "paired_standard_error": 9.543033659980823e-05
+      },
+      {
+        "parameter": "mean_reversion_speed",
+        "parameter_value": 1.0,
+        "option_value": 0.03159039964268995,
+        "standard_error": 0.00011768685290772483,
+        "difference_from_baseline": -5.8955931697304364e-05,
+        "paired_standard_error": 1.5366287696630026e-05
+      },
+      {
+        "parameter": "mean_reversion_speed",
+        "parameter_value": 2.0,
+        "option_value": 0.03164935557438724,
+        "standard_error": 0.0001186865505384848,
+        "difference_from_baseline": 0.0,
+        "paired_standard_error": 0.0
+      },
+      {
+        "parameter": "mean_reversion_speed",
+        "parameter_value": 4.0,
+        "option_value": 0.03170001043420777,
+        "standard_error": 0.00012002648786344217,
+        "difference_from_baseline": 5.0654859820520006e-05,
+        "paired_standard_error": 1.8992810091093985e-05
+      },
+      {
+        "parameter": "volatility_of_variance",
+        "parameter_value": 0.02,
+        "option_value": 0.031744483684565165,
+        "standard_error": 0.00012081844104939812,
+        "difference_from_baseline": 9.512811017791668e-05,
+        "paired_standard_error": 2.0827767264476243e-05
+      },
+      {
+        "parameter": "volatility_of_variance",
+        "parameter_value": 0.04,
+        "option_value": 0.03164935557438724,
+        "standard_error": 0.0001186865505384848,
+        "difference_from_baseline": 0.0,
+        "paired_standard_error": 0.0
+      },
+      {
+        "parameter": "volatility_of_variance",
+        "parameter_value": 0.06,
+        "option_value": 0.03151446818260551,
+        "standard_error": 0.00011717091249435108,
+        "difference_from_baseline": -0.00013488739178173865,
+        "paired_standard_error": 2.0271098603144797e-05
+      },
+      {
+        "parameter": "brownian_correlation",
+        "parameter_value": 0.2,
+        "option_value": 0.03162446570970076,
+        "standard_error": 0.00012083563283399617,
+        "difference_from_baseline": -2.488986468648471e-05,
+        "paired_standard_error": 1.7620436094365196e-05
+      },
+      {
+        "parameter": "brownian_correlation",
+        "parameter_value": 0.5,
+        "option_value": 0.03164935557438724,
+        "standard_error": 0.0001186865505384848,
+        "difference_from_baseline": 0.0,
+        "paired_standard_error": 0.0
+      },
+      {
+        "parameter": "brownian_correlation",
+        "parameter_value": 0.8,
+        "option_value": 0.031646881951520156,
+        "standard_error": 0.00011667508460845425,
+        "difference_from_baseline": -2.4736228670958748e-06,
+        "paired_standard_error": 2.0965820377388638e-05
+      }
+    ]
+  },
+  "sparse_regression_diagnostic": [
+    {
+      "study": "gbm_pricing",
+      "product": {
+        "strike": 36.0,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "spot_drift_rate": 0.06,
+        "volatility": 0.2
+      },
+      "sparse_dates": [
+        1
+      ],
+      "original_value": 0.9122062766633864,
+      "original_standard_error": 0.005639439203593472,
+      "changed_exercise_paths": 3,
+      "value_change_if_sparse_dates_continue": 0.00010050949950871302,
+      "paired_standard_error": 6.0263479289982935e-05,
+      "hold_to_maturity_minus_original": -0.07529618606651109,
+      "holding_difference_standard_error": 0.003876236431717692
+    },
+    {
+      "study": "sv_pricing",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.0005722499880902542,
+      "original_standard_error": 1.2487021346826078e-05,
+      "changed_exercise_paths": 4,
+      "value_change_if_sparse_dates_continue": 5.040360530693789e-07,
+      "paired_standard_error": 5.164791041262917e-07,
+      "hold_to_maturity_minus_original": 1.7238456110307648e-05,
+      "holding_difference_standard_error": 4.631724300598645e-06
+    },
+    {
+      "study": "sv_pricing",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5,
+        4
+      ],
+      "original_value": 0.01433291883032306,
+      "original_standard_error": 0.00010154074643841715,
+      "changed_exercise_paths": 1,
+      "value_change_if_sparse_dates_continue": -1.402605414475344e-08,
+      "paired_standard_error": 1.402605414475344e-08,
+      "hold_to_maturity_minus_original": 9.300347588145728e-05,
+      "holding_difference_standard_error": 4.355421663342941e-05
+    },
+    {
+      "study": "sv_pricing",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        8,
+        7
+      ],
+      "original_value": 0.0018129272903355184,
+      "original_standard_error": 2.5155625797737787e-05,
+      "changed_exercise_paths": 3,
+      "value_change_if_sparse_dates_continue": 6.122984885848981e-07,
+      "paired_standard_error": 4.5659383150107045e-07,
+      "hold_to_maturity_minus_original": 2.8362189596900853e-05,
+      "holding_difference_standard_error": 1.063986883584932e-05
+    },
+    {
+      "study": "sv_pricing",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.009205055291007852,
+      "original_standard_error": 7.330289457191565e-05,
+      "changed_exercise_paths": 4,
+      "value_change_if_sparse_dates_continue": 1.9719436144492753e-06,
+      "paired_standard_error": 1.1676822507256034e-06,
+      "hold_to_maturity_minus_original": 0.00012346783663110827,
+      "holding_difference_standard_error": 3.386902893780252e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.0005722499880902542,
+      "original_standard_error": 1.2487021346826078e-05,
+      "changed_exercise_paths": 4,
+      "value_change_if_sparse_dates_continue": 5.040360530693789e-07,
+      "paired_standard_error": 5.164791041262917e-07,
+      "hold_to_maturity_minus_original": 1.7238456110307648e-05,
+      "holding_difference_standard_error": 4.631724300598645e-06
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.0006117057302285708,
+      "original_standard_error": 1.3273538224194508e-05,
+      "changed_exercise_paths": 2,
+      "value_change_if_sparse_dates_continue": -1.5956566032254703e-08,
+      "paired_standard_error": 1.4915767480019866e-08,
+      "hold_to_maturity_minus_original": 1.4437366038634948e-06,
+      "holding_difference_standard_error": 3.3068284265616475e-06
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        8,
+        7,
+        6,
+        5
+      ],
+      "original_value": 0.0005798042772970992,
+      "original_standard_error": 1.2000129257332917e-05,
+      "changed_exercise_paths": 5,
+      "value_change_if_sparse_dates_continue": 8.0263278934956e-07,
+      "paired_standard_error": 5.650722379025415e-07,
+      "hold_to_maturity_minus_original": 7.583912535170008e-06,
+      "holding_difference_standard_error": 5.944599645970865e-06
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6,
+        5
+      ],
+      "original_value": 0.0006051040097451955,
+      "original_standard_error": 1.327637556607308e-05,
+      "changed_exercise_paths": 2,
+      "value_change_if_sparse_dates_continue": 7.374783876474722e-08,
+      "paired_standard_error": 1.7253613356580515e-07,
+      "hold_to_maturity_minus_original": 5.246735849286972e-06,
+      "holding_difference_standard_error": 4.34575866536377e-06
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.0027607807343208108,
+      "original_standard_error": 3.25203689666698e-05,
+      "changed_exercise_paths": 5,
+      "value_change_if_sparse_dates_continue": 8.741006411970819e-07,
+      "paired_standard_error": 5.542146897045638e-07,
+      "hold_to_maturity_minus_original": 4.784786937336997e-05,
+      "holding_difference_standard_error": 1.598768612705447e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.0027844042569091505,
+      "original_standard_error": 3.377500603196305e-05,
+      "changed_exercise_paths": 2,
+      "value_change_if_sparse_dates_continue": -1.8095584237142083e-07,
+      "paired_standard_error": 1.4129628076865146e-07,
+      "hold_to_maturity_minus_original": 2.903583225971429e-05,
+      "holding_difference_standard_error": 1.312705893860071e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        6
+      ],
+      "original_value": 0.0027523274049603423,
+      "original_standard_error": 3.303978366689106e-05,
+      "changed_exercise_paths": 0,
+      "value_change_if_sparse_dates_continue": 0.0,
+      "paired_standard_error": 0.0,
+      "hold_to_maturity_minus_original": 3.0240593201178606e-05,
+      "holding_difference_standard_error": 1.4587860705810236e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.0027413338808979825,
+      "original_standard_error": 3.345039060362071e-05,
+      "changed_exercise_paths": 4,
+      "value_change_if_sparse_dates_continue": 2.89747223569502e-07,
+      "paired_standard_error": 2.9515009484943165e-07,
+      "hold_to_maturity_minus_original": 1.9901250652029312e-05,
+      "holding_difference_standard_error": 1.3127268145282232e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5,
+        4
+      ],
+      "original_value": 0.01430895005401206,
+      "original_standard_error": 0.00010137773510803165,
+      "changed_exercise_paths": 6,
+      "value_change_if_sparse_dates_continue": 5.015505838843606e-06,
+      "paired_standard_error": 2.1766723027173716e-06,
+      "hold_to_maturity_minus_original": -5.2584853680335417e-05,
+      "holding_difference_standard_error": 4.3913535911074216e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5
+      ],
+      "original_value": 0.014352565187990026,
+      "original_standard_error": 0.00010104041419226974,
+      "changed_exercise_paths": 0,
+      "value_change_if_sparse_dates_continue": 0.0,
+      "paired_standard_error": 0.0,
+      "hold_to_maturity_minus_original": 0.00012523019869572125,
+      "holding_difference_standard_error": 4.629104835141839e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5,
+        4
+      ],
+      "original_value": 0.014346246333001017,
+      "original_standard_error": 0.00010129223595605563,
+      "changed_exercise_paths": 2,
+      "value_change_if_sparse_dates_continue": 1.3268834883058312e-06,
+      "paired_standard_error": 1.0764448671515276e-06,
+      "hold_to_maturity_minus_original": 6.004622878066761e-05,
+      "holding_difference_standard_error": 4.4875207171458394e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 1.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5,
+        4
+      ],
+      "original_value": 0.014451305087299788,
+      "original_standard_error": 0.00010386349864684882,
+      "changed_exercise_paths": 1,
+      "value_change_if_sparse_dates_continue": -2.476250704087635e-09,
+      "paired_standard_error": 2.476250704087634e-09,
+      "hold_to_maturity_minus_original": 3.6407122419809775e-05,
+      "holding_difference_standard_error": 4.0211185051735334e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        8,
+        7,
+        6
+      ],
+      "original_value": 0.0018077765066591065,
+      "original_standard_error": 2.5071645918406917e-05,
+      "changed_exercise_paths": 1,
+      "value_change_if_sparse_dates_continue": 4.840331659605745e-07,
+      "paired_standard_error": 4.840331659605744e-07,
+      "hold_to_maturity_minus_original": 9.492794389489214e-06,
+      "holding_difference_standard_error": 1.0715849444161767e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7
+      ],
+      "original_value": 0.0017831654536655938,
+      "original_standard_error": 2.525260081765255e-05,
+      "changed_exercise_paths": 2,
+      "value_change_if_sparse_dates_continue": 2.2964135968427945e-07,
+      "paired_standard_error": 1.7099289895745606e-07,
+      "hold_to_maturity_minus_original": 2.2591383574926024e-05,
+      "holding_difference_standard_error": 9.539097452468422e-06
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7
+      ],
+      "original_value": 0.0017772886349314814,
+      "original_standard_error": 2.4904751733529077e-05,
+      "changed_exercise_paths": 3,
+      "value_change_if_sparse_dates_continue": 5.239338114392167e-07,
+      "paired_standard_error": 4.188353988596619e-07,
+      "hold_to_maturity_minus_original": 2.3387262155650146e-05,
+      "holding_difference_standard_error": 1.0951138343641646e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0016,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        5
+      ],
+      "original_value": 0.0018300723358366884,
+      "original_standard_error": 2.4736319018176613e-05,
+      "changed_exercise_paths": 2,
+      "value_change_if_sparse_dates_continue": 2.4077548895625076e-07,
+      "paired_standard_error": 2.1365088053706937e-07,
+      "hold_to_maturity_minus_original": 3.88104545549356e-05,
+      "holding_difference_standard_error": 1.147359709725613e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.009284437455546597,
+      "original_standard_error": 7.426347559766154e-05,
+      "changed_exercise_paths": 0,
+      "value_change_if_sparse_dates_continue": 0.0,
+      "paired_standard_error": 0.0,
+      "hold_to_maturity_minus_original": 5.4111812974374646e-05,
+      "holding_difference_standard_error": 3.2184916729049905e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.009298405802837029,
+      "original_standard_error": 7.389731305955288e-05,
+      "changed_exercise_paths": 7,
+      "value_change_if_sparse_dates_continue": 2.3341424311917425e-06,
+      "paired_standard_error": 1.3999994903500796e-06,
+      "hold_to_maturity_minus_original": 7.622423387139898e-07,
+      "holding_difference_standard_error": 3.4038354469792936e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7
+      ],
+      "original_value": 0.009265581377830677,
+      "original_standard_error": 7.394665468059848e-05,
+      "changed_exercise_paths": 5,
+      "value_change_if_sparse_dates_continue": -6.25098105930022e-08,
+      "paired_standard_error": 5.74489204496523e-08,
+      "hold_to_maturity_minus_original": 5.5445306656567525e-05,
+      "holding_difference_standard_error": 3.345750012852912e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0064,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        7,
+        6
+      ],
+      "original_value": 0.009274331264339446,
+      "original_standard_error": 7.378834605695413e-05,
+      "changed_exercise_paths": 3,
+      "value_change_if_sparse_dates_continue": 2.2548550009364621e-07,
+      "paired_standard_error": 3.4073785813809737e-07,
+      "hold_to_maturity_minus_original": -2.5278871059368617e-05,
+      "holding_difference_standard_error": 3.351617922042057e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5
+      ],
+      "original_value": 0.03658481532968484,
+      "original_standard_error": 0.000190442281990929,
+      "changed_exercise_paths": 0,
+      "value_change_if_sparse_dates_continue": 0.0,
+      "paired_standard_error": 0.0,
+      "hold_to_maturity_minus_original": 0.00027669413623636726,
+      "holding_difference_standard_error": 9.990954478821119e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5
+      ],
+      "original_value": 0.036432609527626385,
+      "original_standard_error": 0.00019468686775725503,
+      "changed_exercise_paths": 0,
+      "value_change_if_sparse_dates_continue": 0.0,
+      "paired_standard_error": 0.0,
+      "hold_to_maturity_minus_original": 0.00019917961493170946,
+      "holding_difference_standard_error": 9.127299382310061e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5
+      ],
+      "original_value": 0.03676059668939955,
+      "original_standard_error": 0.00019779922417031563,
+      "changed_exercise_paths": 0,
+      "value_change_if_sparse_dates_continue": 0.0,
+      "paired_standard_error": 0.0,
+      "hold_to_maturity_minus_original": 0.00015052237486827004,
+      "holding_difference_standard_error": 8.77248817203106e-05
+    },
+    {
+      "study": "sv_timestep",
+      "product": {
+        "strike": 0.9,
+        "maturity_years": 2.0
+      },
+      "model": {
+        "initial_variance": 0.0064,
+        "mean_reversion_speed": 2.0,
+        "long_term_variance": 0.0256,
+        "volatility_of_variance": 0.04,
+        "brownian_correlation": 0.5,
+        "spot_drift_rate": 0.0
+      },
+      "sparse_dates": [
+        5,
+        4
+      ],
+      "original_value": 0.036487596189376394,
+      "original_standard_error": 0.00019512842065022047,
+      "changed_exercise_paths": 2,
+      "value_change_if_sparse_dates_continue": 2.2017978922907355e-07,
+      "paired_standard_error": 2.6732901445311977e-07,
+      "hold_to_maturity_minus_original": 0.00025292229504984126,
+      "holding_difference_standard_error": 9.096722937971975e-05
+    }
+  ]
+}

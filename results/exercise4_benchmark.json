@@ -1,0 +1,348 @@
+{
+  "exercise": 4,
+  "method": "Daily Bellman recursion with Gauss-Hermite quadrature",
+  "created_at_utc": "2026-10-11T22:35:44.330073+00:00",
+  "code_sha256": {
+    "products.py": "8a03e54ea1b5875403431696898dad0c88b4baf068d0246cf021b4b649b6246f",
+    "models.py": "28961b92f0c1d793428e60e7dcd3e4450fddd95a27fb78c62ae1b3972123a1c0",
+    "basis.py": "ec2f8688bb497b519ef852825eae216f8f769f42f046c9d6e413fa08e0f8a245",
+    "exercise4/gas_storage_lsmc.py": "ae8966e50dfe8654eda97265412d4f56e4f71f428a53078221d8d47c32916757",
+    "exercise4/gas_storage_benchmark.py": "9e194ecfe3da306a82750a5f944aa23381981dcaf32ea4dea9bb7e38f2f1a21d"
+  },
+  "baseline_results_file": "exercise4_results.json",
+  "baseline_results_sha256": "7fcdbd5a1820fce2151e6b147412bf91afd88f95d4f9091279b263a29dd64106",
+  "baseline_arrays_sha256": "487356cf8eb8314f76a4d4259721c3dfb8fed5a75fbda6dd8db1c82ee968268f",
+  "product": {
+    "start_date": "2005-07-07",
+    "end_date": "2006-06-30",
+    "capacity": 250000.0,
+    "initial_inventory": 100000.0,
+    "final_inventory": 100000.0,
+    "injection_limit": 2500.0,
+    "withdrawal_limit": 7500.0
+  },
+  "initial_spot": 20.0,
+  "inventory_step": 2500.0,
+  "interest_rate": 0.0,
+  "number_of_decision_dates": 359,
+  "interpolation": "Linear in spot on a log-spaced grid, with linear endpoint extrapolation",
+  "scope": "Same daily dates, five actions and 101 inventory states as the assignment implementation",
+  "limitations": "Numerical reference, not an exact value or a rigorous bound; refinements are empirical stability checks. This does not validate the market model or remove inventory discretisation.",
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "scipy": "1.17.0"
+  },
+  "cases": [
+    {
+      "case": "high",
+      "label": "High volatility",
+      "model": {
+        "mean_reversion_speed": 0.05,
+        "log_price_target": 3.0403835235539907,
+        "volatility": 0.0945
+      },
+      "refinements": [
+        {
+          "price_points": 801,
+          "quadrature_points": 128,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 3.1837813375730306,
+          "maximum_spot": 125.63676885703353,
+          "log_price_spacing": 0.004594156708288678,
+          "reference_value": 4508298.680983775,
+          "initial_action": 2500.0,
+          "runtime_seconds": 5.052369211000041,
+          "saved_policy_value": 4506603.152535226,
+          "policy_value_gap": 1695.5284485490993,
+          "policy_value_gap_percent": 0.03760905318232178,
+          "policy_initial_action": 2500.0,
+          "refinement": "price_grid_coarse"
+        },
+        {
+          "price_points": 1601,
+          "quadrature_points": 128,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 3.1837813375730306,
+          "maximum_spot": 125.63676885703353,
+          "log_price_spacing": 0.002297078354144339,
+          "reference_value": 4507622.407484536,
+          "initial_action": 2500.0,
+          "runtime_seconds": 11.615959012997337,
+          "saved_policy_value": 4505929.67545792,
+          "policy_value_gap": 1692.7320266161114,
+          "policy_value_gap_percent": 0.037552658000046084,
+          "policy_initial_action": 2500.0,
+          "refinement": "price_grid_medium"
+        },
+        {
+          "price_points": 3201,
+          "quadrature_points": 128,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 3.1837813375730306,
+          "maximum_spot": 125.63676885703353,
+          "log_price_spacing": 0.0011485391770721695,
+          "reference_value": 4507453.521273919,
+          "initial_action": 2500.0,
+          "runtime_seconds": 28.903340750999632,
+          "saved_policy_value": 4505761.7095880695,
+          "policy_value_gap": 1691.8116858499125,
+          "policy_value_gap_percent": 0.03753364683329589,
+          "policy_initial_action": 2500.0,
+          "refinement": "price_grid_fine"
+        },
+        {
+          "price_points": 3201,
+          "quadrature_points": 64,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 3.1837813375730306,
+          "maximum_spot": 125.63676885703353,
+          "log_price_spacing": 0.0011485391770721695,
+          "reference_value": 4507402.751391545,
+          "initial_action": 2500.0,
+          "runtime_seconds": 22.359224133004318,
+          "saved_policy_value": 4505717.714206368,
+          "policy_value_gap": 1685.037185177207,
+          "policy_value_gap_percent": 0.03738377238770143,
+          "policy_initial_action": 2500.0,
+          "refinement": "quadrature_coarse"
+        },
+        {
+          "price_points": 3201,
+          "quadrature_points": 256,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 3.1837813375730306,
+          "maximum_spot": 125.63676885703353,
+          "log_price_spacing": 0.0011485391770721695,
+          "reference_value": 4507482.941095004,
+          "initial_action": 2500.0,
+          "runtime_seconds": 35.264392598000995,
+          "saved_policy_value": 4505786.574049776,
+          "policy_value_gap": 1696.3670452274382,
+          "policy_value_gap_percent": 0.03763446401009206,
+          "policy_initial_action": 2500.0,
+          "refinement": "quadrature_fine"
+        },
+        {
+          "price_points": 4243,
+          "quadrature_points": 256,
+          "domain_standard_deviations": 8.0,
+          "minimum_spot": 1.7513713549676,
+          "maximum_spot": 228.39245307138177,
+          "log_price_spacing": 0.0011482004531293234,
+          "reference_value": 4507482.907723434,
+          "initial_action": 2500.0,
+          "runtime_seconds": 52.4588122310015,
+          "saved_policy_value": 4505786.091615636,
+          "policy_value_gap": 1696.8161077983677,
+          "policy_value_gap_percent": 0.03764442689046974,
+          "policy_initial_action": 2500.0,
+          "refinement": "domain_wide"
+        }
+      ],
+      "reference": {
+        "price_points": 4243,
+        "quadrature_points": 256,
+        "domain_standard_deviations": 8.0,
+        "minimum_spot": 1.7513713549676,
+        "maximum_spot": 228.39245307138177,
+        "log_price_spacing": 0.0011482004531293234,
+        "reference_value": 4507482.907723434,
+        "initial_action": 2500.0,
+        "runtime_seconds": 52.4588122310015,
+        "saved_policy_value": 4505786.091615636,
+        "policy_value_gap": 1696.8161077983677,
+        "policy_value_gap_percent": 0.03764442689046974,
+        "policy_initial_action": 2500.0,
+        "refinement": "domain_wide"
+      },
+      "stability_changes_eur": {
+        "price_grid": {
+          "reference_value": 168.886210616678,
+          "saved_policy_value": 167.96586985047907,
+          "policy_value_gap": 0.9203407661989331
+        },
+        "quadrature": {
+          "reference_value": 29.419821084477007,
+          "saved_policy_value": 24.86446170695126,
+          "policy_value_gap": 4.555359377525747
+        },
+        "domain": {
+          "reference_value": 0.0333715695887804,
+          "saved_policy_value": 0.4824341405183077,
+          "policy_value_gap": 0.4490625709295273
+        }
+      },
+      "baseline_evaluation_value": 4490526.066982181,
+      "baseline_standard_error": 12533.08871905869,
+      "baseline_error_relative_to_saved_policy": -15260.02463345509,
+      "baseline_error_in_standard_errors": -1.217578920529752,
+      "analytic_three_day_check": {
+        "exact_value": 438.7074122007325,
+        "numerical_value": 438.80156878685375,
+        "absolute_error": 0.09415658612124389,
+        "quadrature_points": 1024,
+        "price_points": 3201
+      },
+      "constant_price_full_year_check": {
+        "exact_value": 0.0,
+        "numerical_value": 1.5742989489808679e-07
+      }
+    },
+    {
+      "case": "low",
+      "label": "Low volatility",
+      "model": {
+        "mean_reversion_speed": 0.05,
+        "log_price_target": 3.000693523553991,
+        "volatility": 0.0315
+      },
+      "refinements": [
+        {
+          "price_points": 801,
+          "quadrature_points": 128,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 10.947384242718602,
+          "maximum_spot": 36.538408731387186,
+          "log_price_spacing": 0.0015065793194295595,
+          "reference_value": 1451554.3226917514,
+          "initial_action": 2500.0,
+          "runtime_seconds": 4.865743962000124,
+          "saved_policy_value": 1450996.9464886736,
+          "policy_value_gap": 557.3762030778453,
+          "policy_value_gap_percent": 0.038398576916105424,
+          "policy_initial_action": 2500.0,
+          "refinement": "price_grid_coarse"
+        },
+        {
+          "price_points": 1601,
+          "quadrature_points": 128,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 10.947384242718602,
+          "maximum_spot": 36.538408731387186,
+          "log_price_spacing": 0.0007532896597147797,
+          "reference_value": 1451333.694339861,
+          "initial_action": 2500.0,
+          "runtime_seconds": 10.063303529997938,
+          "saved_policy_value": 1450773.4070600232,
+          "policy_value_gap": 560.2872798377648,
+          "policy_value_gap_percent": 0.03860499360159977,
+          "policy_initial_action": 2500.0,
+          "refinement": "price_grid_medium"
+        },
+        {
+          "price_points": 3201,
+          "quadrature_points": 128,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 10.947384242718602,
+          "maximum_spot": 36.538408731387186,
+          "log_price_spacing": 0.00037664482985738987,
+          "reference_value": 1451278.5544137135,
+          "initial_action": 2500.0,
+          "runtime_seconds": 26.979229810000106,
+          "saved_policy_value": 1450716.70220174,
+          "policy_value_gap": 561.8522119736299,
+          "policy_value_gap_percent": 0.03871429163373854,
+          "policy_initial_action": 2500.0,
+          "refinement": "price_grid_fine"
+        },
+        {
+          "price_points": 3201,
+          "quadrature_points": 64,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 10.947384242718602,
+          "maximum_spot": 36.538408731387186,
+          "log_price_spacing": 0.00037664482985738987,
+          "reference_value": 1451269.4737054142,
+          "initial_action": 2500.0,
+          "runtime_seconds": 21.574408863001736,
+          "saved_policy_value": 1450721.9341396424,
+          "policy_value_gap": 547.5395657718182,
+          "policy_value_gap_percent": 0.037728318254626254,
+          "policy_initial_action": 2500.0,
+          "refinement": "quadrature_coarse"
+        },
+        {
+          "price_points": 3201,
+          "quadrature_points": 256,
+          "domain_standard_deviations": 6.0,
+          "minimum_spot": 10.947384242718602,
+          "maximum_spot": 36.538408731387186,
+          "log_price_spacing": 0.00037664482985738987,
+          "reference_value": 1451287.0139742692,
+          "initial_action": 2500.0,
+          "runtime_seconds": 35.825383452000096,
+          "saved_policy_value": 1450732.3369960752,
+          "policy_value_gap": 554.676978193922,
+          "policy_value_gap_percent": 0.03821966109067357,
+          "policy_initial_action": 2500.0,
+          "refinement": "quadrature_fine"
+        },
+        {
+          "price_points": 4259,
+          "quadrature_points": 256,
+          "domain_standard_deviations": 8.0,
+          "minimum_spot": 8.969922653107542,
+          "maximum_spot": 44.59347259381594,
+          "log_price_spacing": 0.00037663467372589553,
+          "reference_value": 1451287.0135644383,
+          "initial_action": 2500.0,
+          "runtime_seconds": 50.004131460998906,
+          "saved_policy_value": 1450732.3943004645,
+          "policy_value_gap": 554.6192639737856,
+          "policy_value_gap_percent": 0.038215684340178246,
+          "policy_initial_action": 2500.0,
+          "refinement": "domain_wide"
+        }
+      ],
+      "reference": {
+        "price_points": 4259,
+        "quadrature_points": 256,
+        "domain_standard_deviations": 8.0,
+        "minimum_spot": 8.969922653107542,
+        "maximum_spot": 44.59347259381594,
+        "log_price_spacing": 0.00037663467372589553,
+        "reference_value": 1451287.0135644383,
+        "initial_action": 2500.0,
+        "runtime_seconds": 50.004131460998906,
+        "saved_policy_value": 1450732.3943004645,
+        "policy_value_gap": 554.6192639737856,
+        "policy_value_gap_percent": 0.038215684340178246,
+        "policy_initial_action": 2500.0,
+        "refinement": "domain_wide"
+      },
+      "stability_changes_eur": {
+        "price_grid": {
+          "reference_value": 55.13992614741437,
+          "saved_policy_value": 56.704858283279464,
+          "policy_value_gap": 1.5649321358650923
+        },
+        "quadrature": {
+          "reference_value": 8.459560555638745,
+          "saved_policy_value": 15.634794335346669,
+          "policy_value_gap": 7.1752337797079235
+        },
+        "domain": {
+          "reference_value": 0.00040983082726597786,
+          "saved_policy_value": 0.05730438930913806,
+          "policy_value_gap": 0.05771422013640404
+        }
+      },
+      "baseline_evaluation_value": 1445649.1301134261,
+      "baseline_standard_error": 3918.7489619453017,
+      "baseline_error_relative_to_saved_policy": -5083.2641870384105,
+      "baseline_error_in_standard_errors": -1.2971650484380692,
+      "analytic_three_day_check": {
+        "exact_value": 106.92212617343466,
+        "numerical_value": 106.90359318513947,
+        "absolute_error": 0.0185329882951919,
+        "quadrature_points": 1024,
+        "price_points": 3201
+      },
+      "constant_price_full_year_check": {
+        "exact_value": 0.0,
+        "numerical_value": 1.5742989489808679e-07
+      }
+    }
+  ]
+}

@@ -1,0 +1,173 @@
+{
+  "case_counts": {
+    "table1": 20,
+    "gbm_pricing": 12,
+    "gbm_timestep": 80,
+    "sv_pricing": 18,
+    "sv_timestep": 72,
+    "sv_sensitivities": 12
+  },
+  "total_study_cases": 214,
+  "training_paths_per_case": 50000,
+  "evaluation_paths_per_case": 100000,
+  "core_source_sha256": {
+    "products.py": "e95f9356b904296653cb1f44b5b713a0e1d635ad18ed606edb3e6019b6c9c85b",
+    "valuation.py": "c63997752f3d1e7338b425be63b6c7b4a86946f387963e1bfe0aab636f8834ea",
+    "models.py": "4c2aec1ef9cc32da641352d2939177e0aa7a0b657cadaea97bfef52934814a74",
+    "basis.py": "fd255026a9f8d880c084abbb3febe3d1de2516a71997854a1a01b8e065107d66",
+    "longstaff_schwartz_lsmc.py": "aa134609477fea48fee08d44b3b605da6c0239f4c92c8be63b572905b6300049",
+    "market_data.py": "113a26b23d476cef80fcc86b13145681123481f0f5a92a1976cfcac36e339e25",
+    "run_exercise1.py": "712673fa75191420c3d33b7b8da68b4252f5f18be57ee6143495559607d87bdd",
+    "euler_maruyama.py": "f37457cfc298d57a52c63c5f6d046e56b97bc97045fbdf48477da10adadca225"
+  },
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.3.5",
+    "pytest": "9.0.2",
+    "OPENBLAS_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1"
+  },
+  "generated_at_utc": "2026-10-04T18:05:23.105329+00:00",
+  "correctness_tests": {
+    "passed": 6,
+    "recorded_runtime_seconds": 0.51
+  },
+  "table1": {
+    "mean_absolute_lsm_difference": 0.012521719264186205,
+    "max_absolute_lsm_difference": 0.024144218532303086,
+    "mean_absolute_fd_difference": 0.0159525446937099,
+    "max_absolute_fd_difference": 0.0434840698778185,
+    "max_absolute_combined_sampling_z": 1.5800203334353935,
+    "within_two_combined_sampling_errors": 20,
+    "interpretation": "Combined SE excludes policy-training variability and numerical bias."
+  },
+  "monotonicity": {
+    "gbm_pricing": {
+      "matched_pairs": 24,
+      "violations": []
+    },
+    "sv_pricing": {
+      "matched_pairs": 45,
+      "violations": []
+    }
+  },
+  "numerical_diagnostics": {
+    "table1": {
+      "negative_spot_observations": 0,
+      "variance_projections": 0,
+      "underdetermined_regression_dates": 0,
+      "all_deficiencies_have_fewer_rows_than_columns": true
+    },
+    "gbm_pricing": {
+      "negative_spot_observations": 0,
+      "variance_projections": 0,
+      "underdetermined_regression_dates": 1,
+      "all_deficiencies_have_fewer_rows_than_columns": true
+    },
+    "gbm_timestep": {
+      "negative_spot_observations": 0,
+      "variance_projections": 0,
+      "underdetermined_regression_dates": 0,
+      "all_deficiencies_have_fewer_rows_than_columns": true
+    },
+    "sv_pricing": {
+      "negative_spot_observations": 0,
+      "variance_projections": 1,
+      "underdetermined_regression_dates": 8,
+      "all_deficiencies_have_fewer_rows_than_columns": true
+    },
+    "sv_timestep": {
+      "negative_spot_observations": 0,
+      "variance_projections": 44,
+      "underdetermined_regression_dates": 44,
+      "all_deficiencies_have_fewer_rows_than_columns": true
+    },
+    "sv_sensitivities": {
+      "negative_spot_observations": 0,
+      "variance_projections": 0,
+      "underdetermined_regression_dates": 0,
+      "all_deficiencies_have_fewer_rows_than_columns": true
+    }
+  },
+  "gbm_timestep": [
+    {
+      "volatility": 0.2,
+      "maximum_step_days": 1.0,
+      "mean_fd_error": -0.01258354003652804,
+      "mean_absolute_fd_error": 0.014134551993041634
+    },
+    {
+      "volatility": 0.2,
+      "maximum_step_days": 2.0,
+      "mean_fd_error": -0.012507822365317556,
+      "mean_absolute_fd_error": 0.01551291649573805
+    },
+    {
+      "volatility": 0.2,
+      "maximum_step_days": 4.0,
+      "mean_fd_error": -0.011167699924090769,
+      "mean_absolute_fd_error": 0.017675750057840944
+    },
+    {
+      "volatility": 0.2,
+      "maximum_step_days": 7.0,
+      "mean_fd_error": -0.013840768025787908,
+      "mean_absolute_fd_error": 0.013840768025787908
+    },
+    {
+      "volatility": 0.4,
+      "maximum_step_days": 1.0,
+      "mean_fd_error": -0.008752885439866099,
+      "mean_absolute_fd_error": 0.014827839244744822
+    },
+    {
+      "volatility": 0.4,
+      "maximum_step_days": 2.0,
+      "mean_fd_error": -0.023183272961392866,
+      "mean_absolute_fd_error": 0.025514813318352793
+    },
+    {
+      "volatility": 0.4,
+      "maximum_step_days": 4.0,
+      "mean_fd_error": -0.01195567383177778,
+      "mean_absolute_fd_error": 0.017218765415489657
+    },
+    {
+      "volatility": 0.4,
+      "maximum_step_days": 7.0,
+      "mean_fd_error": 0.0027060513079431026,
+      "mean_absolute_fd_error": 0.014505129044972786
+    }
+  ],
+  "daily_weekly_comparisons": {
+    "gbm_timestep": {
+      "pairs": 20,
+      "max_absolute_difference": 0.05890651232209265,
+      "outside_two_evaluation_errors": 1,
+      "max_absolute_z": 2.699599592954245
+    },
+    "sv_timestep": {
+      "pairs": 18,
+      "max_absolute_difference": 0.0004970031104333042,
+      "outside_two_evaluation_errors": 1,
+      "max_absolute_z": 2.03096143545385
+    }
+  },
+  "sparse_fit_impact": {
+    "cases_replayed": 29,
+    "max_changed_paths": 7,
+    "max_absolute_value_change": 0.00010050949950871302,
+    "max_value_change_relative_to_original_se": 0.06688534532735098,
+    "scope": "Suppress exercise on sparse dates only; all other fitted rules remain fixed. This is not a refitted alternative method."
+  },
+  "result_file_sha256": {
+    "gbm_pricing.json": "678f541a2b08703cdf7a4671b58b15b70c056194c19f6c085197653e0fd882c8",
+    "gbm_timestep.json": "389bf129b2871756fe03b9761ed1595fcc556b482354576938c778c36a3d7b22",
+    "regression_diagnostics.json": "3babbfa4676b41aa5c841427e37cd0b62d6bfdbc2d844989e1d47e3305a09e67",
+    "sv_pricing.json": "a30d95a3e07ddaeebafbacc68fb61ecadb55a17056a247d377b8b8f599b3ea45",
+    "sv_sensitivities.json": "175a269af3dafa574347905c0e110e0b02dcabe21b7a509aea430c4b87860f25",
+    "sv_timestep.json": "0b1dd1b779c295d4c16ab033a48716f09192a15ae25f86d2b121db2bc77c3d2c",
+    "table1.json": "7b76189b0b98ea19e32e20527c07bd5a2be605f7c9c027719a3d89c17a3ffb78"
+  },
+  "source_note": "core_source_sha256 records the original simulation source; result_file_sha256 identifies the saved study files."
+}

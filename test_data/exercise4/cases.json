@@ -1,0 +1,271 @@
+{
+  "exercise": 4,
+  "description": "Explicit gas-storage contract tests, analytical reference cases and one saved operating-path replay. These are test inputs and reference answers, not a historical market dataset or the complete training/evaluation sample.",
+  "cases": {
+    "final_day": {
+      "purpose": "Check that the last trade reaches the required inventory and has the correct signed cashflow.",
+      "source": "Assignment Exhibit 1 contract constraints; cashflow = -spot * inventory change.",
+      "reference_type": "analytical_contract_identity",
+      "units": {
+        "spot": "EUR/MWh",
+        "inventory": "MWh",
+        "trade": "MWh; positive means injection",
+        "cashflow": "EUR; positive means cash received",
+        "time": "days",
+        "mean_reversion_speed": "per day",
+        "volatility": "per square root of day",
+        "log_price_target": "log of price in EUR/MWh; stationary expected spot is 20 EUR/MWh"
+      },
+      "inputs": {
+        "product": {
+          "start_date": "2006-06-30",
+          "end_date": "2006-06-30",
+          "capacity": 250000.0,
+          "initial_inventory": 100000.0,
+          "final_inventory": 100000.0,
+          "injection_limit": 2500.0,
+          "withdrawal_limit": 7500.0
+        },
+        "model": {
+          "mean_reversion_speed": 0.05,
+          "log_price_target": 3.0403835235539907,
+          "volatility": 0.0945
+        },
+        "spot": 20.0,
+        "paths": 10,
+        "unreachable_initial_inventory": 95000.0,
+        "benchmark": {
+          "price_points": 101,
+          "quadrature_points": 16
+        },
+        "inventory_step": 2500.0
+      },
+      "expected": {
+        "rows": [
+          {
+            "initial_inventory": 97500.0,
+            "trade": 2500.0,
+            "cashflow": -50000.0
+          },
+          {
+            "initial_inventory": 100000.0,
+            "trade": 0.0,
+            "cashflow": 0.0
+          },
+          {
+            "initial_inventory": 102500.0,
+            "trade": -2500.0,
+            "cashflow": 50000.0
+          },
+          {
+            "initial_inventory": 105000.0,
+            "trade": -5000.0,
+            "cashflow": 100000.0
+          },
+          {
+            "initial_inventory": 107500.0,
+            "trade": -7500.0,
+            "cashflow": 150000.0
+          }
+        ],
+        "continuation": 0.0,
+        "final_inventory": 100000.0,
+        "unreachable_inventory_error": "cannot be reached"
+      },
+      "tolerances": {
+        "trade_absolute_mwh": 0.0,
+        "cashflow_absolute_eur": 0.0,
+        "benchmark_value_absolute_eur": 1e-08,
+        "relative": 0.0
+      }
+    },
+    "zero_volatility": {
+      "purpose": "Check that constant prices and equal initial/final inventories give zero full-contract value.",
+      "source": "Analytical identity: sum(-S * delta_v) = -S * (final_inventory - initial_inventory).",
+      "reference_type": "analytical_limiting_case",
+      "units": {
+        "spot": "EUR/MWh",
+        "inventory": "MWh",
+        "trade": "MWh; positive means injection",
+        "cashflow": "EUR; positive means cash received",
+        "time": "days",
+        "mean_reversion_speed": "per day",
+        "volatility": "per square root of day",
+        "log_price_target": "log of price in EUR/MWh; stationary expected spot is 20 EUR/MWh"
+      },
+      "inputs": {
+        "product": {
+          "start_date": "2005-07-07",
+          "end_date": "2006-06-30",
+          "capacity": 250000.0,
+          "initial_inventory": 100000.0,
+          "final_inventory": 100000.0,
+          "injection_limit": 2500.0,
+          "withdrawal_limit": 7500.0
+        },
+        "model": {
+          "mean_reversion_speed": 0.05,
+          "log_price_target": 2.995732273553991,
+          "volatility": 0.0
+        },
+        "spot": 20.0,
+        "paths": 10,
+        "seed": 4106,
+        "benchmark": {
+          "price_points": 101,
+          "quadrature_points": 8
+        },
+        "inventory_step": 2500.0
+      },
+      "expected": {
+        "value": 0.0,
+        "final_inventory": 100000.0,
+        "all_dates_constant": true
+      },
+      "tolerances": {
+        "cashflow_absolute_eur": 1e-07,
+        "benchmark_value_absolute_eur": 1e-05,
+        "relative": 0.0
+      }
+    },
+    "three_day_high": {
+      "purpose": "Check integration of a nonlinear storage decision over three dates, including an action-switching kink.",
+      "source": "Exact three-day solution from truncated lognormal moments under the stated gas model and contract; derivation implemented in exact_three_day_value.",
+      "reference_type": "analytical_truncated_lognormal_moments",
+      "units": {
+        "spot": "EUR/MWh",
+        "inventory": "MWh",
+        "trade": "MWh; positive means injection",
+        "cashflow": "EUR; positive means cash received",
+        "time": "days",
+        "mean_reversion_speed": "per day",
+        "volatility": "per square root of day",
+        "log_price_target": "log of price in EUR/MWh; stationary expected spot is 20 EUR/MWh"
+      },
+      "inputs": {
+        "product": {
+          "start_date": "2006-06-28",
+          "end_date": "2006-06-30",
+          "capacity": 250000.0,
+          "initial_inventory": 100000.0,
+          "final_inventory": 100000.0,
+          "injection_limit": 2500.0,
+          "withdrawal_limit": 7500.0
+        },
+        "model": {
+          "mean_reversion_speed": 0.05,
+          "log_price_target": 3.0403835235539907,
+          "volatility": 0.0945
+        },
+        "spot": 20.0,
+        "benchmark": {
+          "price_points": 3201,
+          "quadrature_points": 1024,
+          "domain_standard_deviations": 8.0
+        },
+        "inventory_step": 2500.0
+      },
+      "expected": {
+        "value": 438.707412200725,
+        "initial_action": 2500.0
+      },
+      "tolerances": {
+        "exact_value_absolute_eur": 1e-08,
+        "benchmark_value_absolute_eur": 0.2,
+        "relative": 0.0,
+        "action_absolute_mwh": 0.0
+      }
+    },
+    "three_day_low": {
+      "purpose": "Check integration of a nonlinear storage decision over three dates, including an action-switching kink.",
+      "source": "Exact three-day solution from truncated lognormal moments under the stated gas model and contract; derivation implemented in exact_three_day_value.",
+      "reference_type": "analytical_truncated_lognormal_moments",
+      "units": {
+        "spot": "EUR/MWh",
+        "inventory": "MWh",
+        "trade": "MWh; positive means injection",
+        "cashflow": "EUR; positive means cash received",
+        "time": "days",
+        "mean_reversion_speed": "per day",
+        "volatility": "per square root of day",
+        "log_price_target": "log of price in EUR/MWh; stationary expected spot is 20 EUR/MWh"
+      },
+      "inputs": {
+        "product": {
+          "start_date": "2006-06-28",
+          "end_date": "2006-06-30",
+          "capacity": 250000.0,
+          "initial_inventory": 100000.0,
+          "final_inventory": 100000.0,
+          "injection_limit": 2500.0,
+          "withdrawal_limit": 7500.0
+        },
+        "model": {
+          "mean_reversion_speed": 0.05,
+          "log_price_target": 3.000693523553991,
+          "volatility": 0.0315
+        },
+        "spot": 20.0,
+        "benchmark": {
+          "price_points": 3201,
+          "quadrature_points": 1024,
+          "domain_standard_deviations": 8.0
+        },
+        "inventory_step": 2500.0
+      },
+      "expected": {
+        "value": 106.922126173442,
+        "initial_action": 2500.0
+      },
+      "tolerances": {
+        "exact_value_absolute_eur": 1e-08,
+        "benchmark_value_absolute_eur": 0.2,
+        "relative": 0.0,
+        "action_absolute_mwh": 0.0
+      }
+    },
+    "saved_operating_path": {
+      "purpose": "Expose a complete saved operating path in readable form and check its feasibility, cashflow arithmetic and agreement with the stored decision rule.",
+      "source": "results/exercise4_arrays.npz, first saved high-volatility evaluation path (array index 0); contract and settings from results/exercise4_results.json.",
+      "reference_type": "saved_implementation_replay_not_independent_benchmark",
+      "units": {
+        "spot": "EUR/MWh",
+        "inventory": "MWh",
+        "trade": "MWh; positive means injection",
+        "cashflow": "EUR; positive means cash received",
+        "time": "days",
+        "mean_reversion_speed": "per day",
+        "volatility": "per square root of day"
+      },
+      "inputs": {
+        "file": "operating_path.csv",
+        "arrays_file": "results/exercise4_arrays.npz",
+        "results_file": "results/exercise4_results.json",
+        "case": "high",
+        "path_index": 0,
+        "product": {
+          "start_date": "2005-07-07",
+          "end_date": "2006-06-30",
+          "capacity": 250000.0,
+          "initial_inventory": 100000.0,
+          "final_inventory": 100000.0,
+          "injection_limit": 2500.0,
+          "withdrawal_limit": 7500.0
+        },
+        "inventory_step": 2500.0,
+        "spot": 20.0
+      },
+      "expected": {
+        "operating_dates": 359,
+        "initial_inventory": 100000.0,
+        "final_inventory": 100000.0,
+        "total_cashflow": 3791900.280947709
+      },
+      "tolerances": {
+        "cashflow_absolute_eur": 1e-07,
+        "inventory_absolute_mwh": 0.0,
+        "saved_array_absolute": 0.0
+      }
+    }
+  }
+}

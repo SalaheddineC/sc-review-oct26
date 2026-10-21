@@ -1,0 +1,22 @@
+{
+  "format_version": 1,
+  "scope": "Published result data. Hashes verify bytes and cross-file consistency, not mathematical accuracy.",
+  "provenance": "Source hashes identify the recorded numerical runs. The file hashes below identify the supplied result files.",
+  "files_sha256": {
+    "exercise2_control_variates.json": "4b90f6da0f7859fc4f53590f75e61a1c631f40c132577f27df290f4f92678678",
+    "exercise2_gamma.json": "f2a96aa1817f7c8425b50e385fa9a738a9d2c5e5f1a5a4d6abbc01e71306dbb4",
+    "exercise3_results.json": "7606aa20a6f751aa53f028490f9d4856a7eb44701e285b595eb949192495a5c2",
+    "exercise4_arrays.npz": "487356cf8eb8314f76a4d4259721c3dfb8fed5a75fbda6dd8db1c82ee968268f",
+    "exercise4_benchmark.json": "006ff0d6257480589c1015051b6fab03ef5c36cd753d0ad1b325a8be0c000246",
+    "exercise4_extensions.json": "52ff9aa5a10ade76328d63d75f729d799a3dc7f31f4f157bed9f8fecf9c75055",
+    "exercise4_results.json": "7fcdbd5a1820fce2151e6b147412bf91afd88f95d4f9091279b263a29dd64106",
+    "gbm_pricing.json": "678f541a2b08703cdf7a4671b58b15b70c056194c19f6c085197653e0fd882c8",
+    "gbm_timestep.json": "389bf129b2871756fe03b9761ed1595fcc556b482354576938c778c36a3d7b22",
+    "regression_diagnostics.json": "3babbfa4676b41aa5c841427e37cd0b62d6bfdbc2d844989e1d47e3305a09e67",
+    "sv_pricing.json": "a30d95a3e07ddaeebafbacc68fb61ecadb55a17056a247d377b8b8f599b3ea45",
+    "sv_sensitivities.json": "175a269af3dafa574347905c0e110e0b02dcabe21b7a509aea430c4b87860f25",
+    "sv_timestep.json": "0b1dd1b779c295d4c16ab033a48716f09192a15ae25f86d2b121db2bc77c3d2c",
+    "table1.json": "7b76189b0b98ea19e32e20527c07bd5a2be605f7c9c027719a3d89c17a3ffb78",
+    "validation_summary.json": "a327fc435c74476ffaf0f68e86407bc7c446ef30eb76462e19b6387e5e365b61"
+  }
+}
