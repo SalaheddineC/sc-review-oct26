@@ -53,8 +53,19 @@ CSVs; the gas-storage CSV exposes one complete saved operating path.
     exercise4/   Final-day trades, analytical short contracts, constant-price
                  storage and the saved operating replay.
 
-Run python -m pytest -q to execute these checks, together with the existing
-integration and UI tests. test_data/README.txt explains each file and reference.
+Run python -m pytest -q for 42 automated tests covering numerical calculations,
+reproducibility, error handling, saved-file integrity and all five application
+pages. A successful run reports 42 passed.
+
+The numerical checks include the eight-path worked example in Section 1 of
+Longstaff-Schwartz (2001), and five positive-rate American-put prices from
+Barone-Adesi-Whaley (1987), Table IV. Other checks use analytical formulas,
+prescribed cases and the assignment's operating constraints. The saved
+gas-storage replay checks consistency with the recorded path and decisions.
+
+The full Longstaff-Schwartz Table 1 comparison is a separate numerical study;
+it is not rerun by this test command. test_data/README.txt explains each file,
+reference and tolerance.
 
 The valuation studies generate their price paths from the specified models.
 Training paths estimate continuation values and decision rules; independently
